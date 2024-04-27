@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p class="title">{{ title ?? null }}</p>
+    <p v-if="title != null" class="title">{{ title }}</p>
     <slot></slot>
   </div>
 </template>

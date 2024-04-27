@@ -1,6 +1,8 @@
 <template>
   <header>
-    <p>Find a Coach</p>
+    <router-link to="/">
+      <p>Find a Coach</p>
+    </router-link>
     <div class="button-wrapper">
       <HeaderButton title="All Coaches" page="/coaches"/>
       <HeaderButton title="Requests" page="/requests"/>
@@ -26,15 +28,16 @@ header {
   display: flex;
   justify-content: space-between;
 
-  p, .button-wrapper {
+  a, .button-wrapper {
     margin:auto 0
   }
 
-  p {
+  a {
     margin-left: 10%;
     color: white;
     font-weight: 900;
     font-size: 24px;
+    text-decoration: none;
   }
 
   .button-wrapper {

@@ -11,7 +11,10 @@
   </BaseCard>
 
   <BaseCard>
-    <button> Refresh </button>
+    <div class="card-wrapper">
+      <button @click="fetchCoaches()"> Refresh </button>
+      <router-link to="/register">Register</router-link>
+    </div>
     <CoachCard v-for="coach in coaches" :coach="coach" :key="coach.id"/>
   </BaseCard>
 </template>
@@ -23,7 +26,7 @@ import CoachCard from '../components/ui/CoachCard.vue';
 export default {
   computed: {
     coaches() {
-      return this.$store.getters.coachesList;
+      return this.$store.getters['coaches/coachesList'];
     }
   },
   components: {
@@ -32,9 +35,32 @@ export default {
   },
   methods: {
     selectSkill(event) {
-      this.$store.dispatch('setSkill', event.target.value);
+      this.$store.dispatch('coaches/setSkill', event.target.value);
+    },
+    async fetchCoaches() {
+      try {
+        const response = await fetch('https://find-a-coach-c82ef-default-rtdb.firebaseio.com/coaches.json', {
+          'method': 'GET'
+        });
+
+        response.json().then((data) => {
+          const results = [];
+          
+          for(const id in data) {
+            results.push({
+              id: id,
+              name: data[id].name,
+              price: data[id].price,
+              skills: data[id].skills,
+            })
+          }
+          this.$store.dispatch('coaches/setCoaches', results);
+        });
+      } catch (error) {
+        console.log(error);
+      }
     }
-  },
+}
 }
 </script>
 
@@ -43,12 +69,42 @@ export default {
     margin-left: 20px;
     margin-right: 7px;
   }
-  button {
-    border: 1px solid rgb(54, 0, 54);
-    color: rgb(54, 0, 54);
-    border-radius: 16px;
+
+  .card-wrapper {
+    margin-top: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  button, a {
+    background-color: white;
+    border: 1px solid rgb(0, 0, 0);
+    color: rgb(85, 0, 85);
+    font-weight: 500;
+    border-radius: 12px;
     width: 100px;
     height: 35px;
-    margin-left: 20px;
+    box-shadow: 2px 2px 5px rgba(139, 139, 139, 0.281);
   }
+
+  button {
+    margin-left: 25px;
+  }
+
+  a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    text-decoration: none;
+    margin-right: 25px;
+    font-weight: 400;
+    box-shadow: 2px 2px 5px rgba(139, 139, 139, 0.281);
+  }
+
+  button:hover, a:hover {
+    cursor: pointer;
+    background-color: rgba(158, 0, 158, 0.253);
+  } 
 </style>
