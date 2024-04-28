@@ -5,8 +5,8 @@
     <BaseButton v-for="skill in coach.skills" :key="skill" :skill="skill"> {{ skill.toUpperCase() }}</BaseButton>
 
     <div class="aditional-info">
-      <button class="contact"> Contact </button>
-      <button class="details"> View details</button>
+      <router-link class="contact" :to="coachContactLink"> Contact </router-link>
+      <router-link class="details" :to="coachDetailsLink"> View details</router-link>
     </div>
   </section>
 </template>
@@ -22,7 +22,13 @@ export default {
   computed: {
     skills() {
       return this.$store.getters['coaches/selectedSkillsList'];
-    }
+    },
+    coachContactLink() {
+      return '/coaches/' + this.coach.id + '/contact';
+    },
+    coachDetailsLink() {
+      return '/coaches/' + this.coach.id;
+    },
   },
   methods: {
     checkSkills() {
@@ -71,6 +77,19 @@ export default {
     button:hover {
       cursor: pointer;
     }
+  }
+
+  a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 110px;
+    height: 40px;
+    border: 1px solid rgb(95, 95, 95);
+    border-radius: 20px;
+    font-size: 14px;
+    min-width: 120px;
+    text-decoration: none;
   }
 
   .contact {
