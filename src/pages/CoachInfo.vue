@@ -10,7 +10,7 @@
 
   <BaseCard class="skill">
     <BaseButton v-for="skill in coach.skills" :key="skill" :skill="skill"> {{ skill.toUpperCase() }}</BaseButton>
-    <p> {{ coach.description ?? "Coach doesn't have a description yet!" }}</p>
+    <p> {{ coach.description ?? coach.name + " doesn't have a description yet!" }}</p>
   </BaseCard>
 </template>
 

@@ -13,7 +13,7 @@
   <BaseCard>
     <div class="card-wrapper">
       <button @click="fetchCoaches()"> Refresh </button>
-      <router-link to="/register">Register</router-link>
+      <router-link to="/register" class="register">Register as a coach</router-link>
     </div>
     <CoachCard v-for="coach in coaches" :coach="coach" :key="coach.id"/>
   </BaseCard>
@@ -49,7 +49,7 @@ export default {
           for(const id in data) {
             results.push({
               id: id,
-              name: data[id].name,
+              name: data[id].firstname ? data[id].firstname + data[id.lastname] : data[id].name,
               price: data[id].price,
               skills: data[id].skills,
             })
@@ -101,10 +101,22 @@ export default {
     margin-right: 25px;
     font-weight: 400;
     box-shadow: 2px 2px 5px rgba(139, 139, 139, 0.281);
+    min-width: fit-content;
+    padding: 0 10px;
   }
 
   button:hover, a:hover {
     cursor: pointer;
     background-color: rgba(158, 0, 158, 0.253);
   } 
+
+  .register {
+    background-color: rgb(61, 0, 110);
+    color: white;
+  }
+
+  .register:hover {
+    background-color: rgb(92, 0, 92);
+    
+  }
 </style>
