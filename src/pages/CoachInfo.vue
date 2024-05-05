@@ -2,16 +2,17 @@
   <BaseCard class="coach-card" :title="coach.name">
     <p>{{ coach.price }}$/hour</p>
   </BaseCard>
-  <router-view></router-view>
 
-  <BaseCard title="Interested? Reach out now!">
-    <BaseButton class="details">Contact</BaseButton>
+  <BaseCard title="Interested? Reach out now!" class="coach-card">
+    <router-link class="details" :to="coachUrl">Contact</router-link>
+    <router-view />
   </BaseCard>
 
   <BaseCard class="skill">
     <BaseButton v-for="skill in coach.skills" :key="skill" :skill="skill"> {{ skill.toUpperCase() }}</BaseButton>
     <p> {{ coach.description ?? coach.name + " doesn't have a description yet!" }}</p>
   </BaseCard>
+
 </template>
 
 <style></style>
@@ -33,7 +34,11 @@ import BaseButton from '../components/ui/BaseButton.vue'
     },
     created() {
       this.coach = this.$store.getters['coaches/coachesList'].find((coach) => coach.id === this.id)
-      console.log(this.coach)
+    },
+    computed: {
+      coachUrl() {
+        return '/coaches/' + this.id + '/contact'
+      }
     }
   }
 </script>
@@ -54,8 +59,18 @@ import BaseButton from '../components/ui/BaseButton.vue'
     margin-left: 15px;
     margin-top: 0;
     width: 90px;
-    height: 40px;
+    height: 30px;
     margin-bottom: 20px;
+    text-decoration: none;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .coach-card {
+    display: flex;
+    flex-direction: column;
   }
   
   .skill {

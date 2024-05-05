@@ -49,7 +49,7 @@ export default {
           for(const id in data) {
             results.push({
               id: id,
-              name: data[id].firstname ? data[id].firstname + data[id.lastname] : data[id].name,
+              name: data[id].lastname ? data[id].firstname + data[id].lastname : data[id].name,
               price: data[id].price,
               skills: data[id].skills,
             })
